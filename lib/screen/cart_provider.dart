@@ -1,4 +1,6 @@
 import 'dart:collection';
+import 'dart:developer';
+
 
 import 'package:flutter/material.dart';
 import 'package:g_3_shopping/screen/item_model.dart';
@@ -8,6 +10,19 @@ class CartProvider extends ChangeNotifier {
 
   UnmodifiableListView<Item> get cartItems => UnmodifiableListView(_cartItems);
 
- 
- 
+ double get price => _cartItems.fold<double>(
+      0.0, (previousValue, element) => previousValue += element.price);
+
+                                                                        //Add Item(s)
+  void addItem(Item item) {
+    _cartItems.add(item);
+    notifyListeners();
+    log("Item Added");
+  }
+
+                                                                        //Reset Cart
+  void reset() {
+    _cartItems.clear();
+    notifyListeners();
+  }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:g_3_shopping/constants.dart';
-import 'package:g_3_shopping/screen/item_model.dart';
+import 'package:g_3_shopping/screen/cart_provider.dart';
+
 import 'package:g_3_shopping/screen/widgets.dart';
+import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -9,27 +11,37 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cart'),
-        centerTitle: true,
-        backgroundColor: primaryColor),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(itemBuilder: (context, index) => ItemWidget(item: Item(name: "name", price: 100, color: primaryColor),),
-            ),
+        appBar: AppBar(
+            title: const Text("Cart"),
+            centerTitle: true,
+            backgroundColor: primaryColor),
+        body: Consumer<CartProvider>(
+          builder: (context, provider, child) => Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: provider.cartItems.length,
+                  itemBuilder: (context, index) => ItemWidget(
+                    isCartItem: true,
+                    item: provider.cartItems[index],
+                  ),
+                ),
+
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: primaryColor),
+                  onPressed: () {},
+                  child: Text("Buy \$${provider.price}")),  //I suggest \&& or "N"...instead of child: Text("Buy ${provider.price} \$")),
+
+              const SizedBox(
+                height: 20,
+              )
+            ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
-            onPressed: () {},
-            child: Text("Buy: 100\$"),
-          ),
-          const SizedBox(height: 20,),
-        ],
-      ),
-      );
+        ));
   }
 }

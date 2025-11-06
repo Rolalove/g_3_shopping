@@ -9,7 +9,7 @@ class ItemWidget extends StatelessWidget {
   final Item item;
   final bool isCartItem;
 
-/*class ItemWidget extends StatelessWidget {                               
+  /*class ItemWidget extends StatelessWidget {                               
   const ItemWidget({
     super.key,
     required this.item,
@@ -27,13 +27,14 @@ final Item item; */
         decoration: BoxDecoration(color: item.color),
       ),
       title: Text(item.name),
-      subtitle: Text("\$${item.price}"),                                   //sugg also change positioning \$$
+      subtitle: Text("\$${item.price}"), //sugg also change positioning \$$
       trailing: isCartItem
           ? null
           : ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
               onPressed: () => provider.addItem(item),
-              child: const Text("+Add")),                                  //added "+"
+              child: const Text("Add", style: TextStyle(color: Colors.white)),
+            ), //added "+"
     );
   }
 }
